@@ -48,9 +48,23 @@ All colors MUST be HSL.
     --gradient-hero: linear-gradient(135deg, hsl(var(--energy-green) / 0.1), hsl(var(--energy-blue) / 0.1));
     --gradient-cta: linear-gradient(135deg, hsl(var(--energy-orange)), hsl(var(--energy-green)));
 
-    /* Shadows */
-    --shadow-premium: 0 20px 25px -5px hsl(var(--energy-green) / 0.1), 0 10px 10px -5px hsl(var(--energy-green) / 0.04);
-    --shadow-card: 0 4px 6px -1px hsl(210 17% 23% / 0.1), 0 2px 4px -1px hsl(210 17% 23% / 0.06);
+    /* Advanced gradients */
+    --gradient-mesh: radial-gradient(circle at 20% 80%, hsl(var(--energy-green) / 0.15) 0%, transparent 50%), 
+                     radial-gradient(circle at 80% 20%, hsl(var(--energy-blue) / 0.15) 0%, transparent 50%), 
+                     radial-gradient(circle at 40% 40%, hsl(var(--energy-orange) / 0.1) 0%, transparent 50%);
+    --gradient-glass: linear-gradient(135deg, hsl(var(--background) / 0.9) 0%, hsl(var(--background) / 0.7) 100%);
+    --gradient-energy-flow: linear-gradient(45deg, hsl(var(--energy-green)), hsl(var(--energy-blue)), hsl(var(--energy-orange)), hsl(var(--energy-green)));
+
+    /* Premium shadows */
+    --shadow-premium: 0 25px 50px -12px hsl(var(--energy-green) / 0.25), 0 0 0 1px hsl(var(--energy-green) / 0.05);
+    --shadow-card: 0 10px 25px -3px hsl(210 17% 23% / 0.1), 0 4px 6px -2px hsl(210 17% 23% / 0.05);
+    --shadow-glow: 0 0 60px hsl(var(--energy-green) / 0.4);
+    --shadow-floating: 0 20px 40px -4px hsl(var(--energy-blue) / 0.15);
+    
+    /* Physics variables */
+    --physics-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --physics-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --physics-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --radius: 0.5rem;
 
@@ -117,5 +131,104 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
   }
+}
+
+@layer utilities {
+  /* Glass morphism effects */
+  .glass {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/5 border border-white/10 shadow-xl;
+  }
+
+  /* Physics animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-bounce-gentle {
+    animation: bounce-gentle 2s infinite;
+  }
+
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradient 8s ease infinite;
+  }
+
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: var(--shadow-floating);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+    @apply transition-all duration-500;
+  }
+
+  /* Energy flow effect */
+  .energy-border {
+    position: relative;
+    background: var(--gradient-energy-flow);
+    background-size: 400% 400%;
+    animation: gradient 3s ease infinite;
+    padding: 2px;
+    border-radius: 12px;
+  }
+  
+  .energy-border > * {
+    @apply bg-background rounded-lg;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(2deg); 
+  }
+}
+
+@keyframes glow {
+  0% { 
+    box-shadow: 0 0 20px hsl(var(--energy-green) / 0.5);
+  }
+  100% { 
+    box-shadow: 0 0 40px hsl(var(--energy-green) / 0.8), 0 0 60px hsl(var(--energy-green) / 0.4);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-8px);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
