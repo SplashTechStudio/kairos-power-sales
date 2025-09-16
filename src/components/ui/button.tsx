@@ -15,6 +15,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        energy: "bg-gradient-to-r from-energy-green to-energy-blue text-white hover:from-energy-green/90 hover:to-energy-blue/90 shadow-lg hover:shadow-xl transition-all duration-300",
+        "energy-outline": "border-2 border-energy-green text-energy-green hover:bg-energy-green hover:text-white transition-all duration-300",
+        cta: "bg-gradient-to-r from-energy-orange to-energy-green text-white hover:from-energy-orange/90 hover:to-energy-green/90 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",
